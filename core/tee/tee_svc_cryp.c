@@ -2357,7 +2357,7 @@ out:
 }
 
 TEE_Result syscall_cipher_init(unsigned long state, const void *iv,
-			size_t iv_len)
+			size_t iv_len, uint32_t ctr)
 {
 	TEE_Result res;
 	struct tee_cryp_state *cs;
@@ -2404,14 +2404,14 @@ TEE_Result syscall_cipher_init(unsigned long state, const void *iv,
 					     key1->key_size,
 					     (uint8_t *)(key2 + 1),
 					     key2->key_size,
-					     iv, iv_len);
+					     iv, iv_len, ctr);
 	} else {
 		res = crypto_ops.cipher.init(cs->ctx, cs->algo, cs->mode,
 					     (uint8_t *)(key1 + 1),
 					     key1->key_size,
 					     NULL,
 					     0,
-					     iv, iv_len);
+					     iv, iv_len, ctr);
 	}
 	if (res != TEE_SUCCESS)
 		return res;

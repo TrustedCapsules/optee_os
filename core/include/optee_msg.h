@@ -364,6 +364,7 @@ struct optee_msg_arg {
  */
 #define OPTEE_MSG_RPC_CMD_GET_TIME	3
 
+
 /*
  * Wait queue primitive, helper for secure world to implement a wait queue.
  *
@@ -439,5 +440,10 @@ struct optee_msg_arg {
  * [in] param[0].u.value.c	Size of buffer
  */
 #define OPTEE_MSG_RPC_CMD_BENCH_REG	20
+
+/*
+ * GPS Access
+ */
+#define OPTEE_MSG_RPC_CMD_GET_GPS 12
 
 #endif /* _OPTEE_MSG_H */

@@ -64,7 +64,7 @@ struct cipher_ops {
 			    TEE_OperationMode mode,
 			    const uint8_t *key1, size_t key1_len,
 			    const uint8_t *key2, size_t key2_len,
-			    const uint8_t *iv, size_t iv_len);
+			    const uint8_t *iv, size_t iv_len, uint32_t ctr);
 	TEE_Result (*update)(void *ctx, uint32_t algo,
 			     TEE_OperationMode mode,
 			     bool last_block, const uint8_t *data,

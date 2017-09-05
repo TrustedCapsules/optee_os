@@ -831,7 +831,7 @@ out:
 /* Cryptographic Operations API - Symmetric Cipher Functions */
 
 void TEE_CipherInit(TEE_OperationHandle operation, const void *IV,
-		    uint32_t IVLen)
+		    uint32_t IVLen, uint32_t ctr)
 {
 	TEE_Result res;
 
@@ -850,7 +850,7 @@ void TEE_CipherInit(TEE_OperationHandle operation, const void *IV,
 
 	operation->operationState = TEE_OPERATION_STATE_ACTIVE;
 
-	res = utee_cipher_init(operation->state, IV, IVLen);
+	res = utee_cipher_init(operation->state, IV, IVLen, ctr);
 	if (res != TEE_SUCCESS)
 		TEE_Panic(res);
 
@@ -987,7 +987,8 @@ TEE_Result TEE_CipherUpdate(TEE_OperationHandle operation, const void *srcData,
 	}
 
 	if (!srcData && !srcLen) {
-		*destLen = 0;
+        DMSG( "No srcData and no srcLen" );
+        *destLen = 0;
 		res = TEE_SUCCESS;
 		goto out;
 	}
@@ -1036,6 +1037,7 @@ out:
 	    res != TEE_ERROR_SHORT_BUFFER)
 		TEE_Panic(res);
 
+    DMSG( "Returning destlen %d", *destlen);
 	return res;
 }
 

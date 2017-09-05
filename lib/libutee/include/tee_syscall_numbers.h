@@ -99,8 +99,20 @@
 #define TEE_SCN_SE_CHANNEL_TRANSMIT		68
 #define TEE_SCN_SE_CHANNEL_CLOSE		69
 #define TEE_SCN_CACHE_OPERATION			70
+#define TEE_SCN_SIMPLE_OPEN             71
+#define TEE_SCN_SIMPLE_CLOSE            72
+#define TEE_SCN_SIMPLE_UNLINK           73
+#define TEE_SCN_SIMPLE_READ             74
+#define TEE_SCN_SIMPLE_WRITE            75
+#define TEE_SCN_SIMPLE_FTRUNCATE        76
+#define TEE_SCN_SIMPLE_RECV				77
+#define TEE_SCN_SIMPLE_SEND	   		    78
+#define TEE_SCN_SIMPLE_CLOSE_CONNECTION	79
+#define TEE_SCN_SIMPLE_OPEN_CONNECTION  80
+#define TEE_SCN_GET_GPS          81
+#define TEE_SCN_SIMPLE_LSEEK            82
 
-#define TEE_SCN_MAX				70
+#define TEE_SCN_MAX				82
 
 /* Maximum number of allowed arguments for a syscall */
 #define TEE_SVC_MAX_ARGS			8

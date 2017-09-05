@@ -39,8 +39,10 @@ static TEE_Result tee_pobj_check_access(uint32_t oflags, uint32_t nflags)
 {
 	/* meta is exclusive */
 	if ((oflags & TEE_DATA_FLAG_ACCESS_WRITE_META) ||
-	    (nflags & TEE_DATA_FLAG_ACCESS_WRITE_META))
-		return TEE_ERROR_ACCESS_CONFLICT;
+	    (nflags & TEE_DATA_FLAG_ACCESS_WRITE_META)) {
+	    DMSG("%s used write meta flag", (oflags & TEE_DATA_FLAG_ACCESS_WRITE_META) ? "oflags" : "nflags");
+        return TEE_ERROR_ACCESS_CONFLICT;
+    }
 
 	/*
 	 * Excerpt of TEE Internal Core API Specification v1.1:
@@ -52,8 +54,10 @@ static TEE_Result tee_pobj_check_access(uint32_t oflags, uint32_t nflags)
 	if (((oflags & TEE_DATA_FLAG_ACCESS_READ) ||
 	     (nflags & TEE_DATA_FLAG_ACCESS_READ)) &&
 	    !((nflags & TEE_DATA_FLAG_SHARE_READ) &&
-	      (oflags & TEE_DATA_FLAG_SHARE_READ)))
-		return TEE_ERROR_ACCESS_CONFLICT;
+	      (oflags & TEE_DATA_FLAG_SHARE_READ))) {
+        DMSG("Read access violation");
+        return TEE_ERROR_ACCESS_CONFLICT;
+    }
 
 	/*
 	 * Excerpt of TEE Internal Core API Specification v1.1:
@@ -63,18 +67,24 @@ static TEE_Result tee_pobj_check_access(uint32_t oflags, uint32_t nflags)
 	 * subsequent attempts to access the object
 	 */
 	if ((nflags & TEE_DATA_FLAG_SHARE_READ) !=
-	    (oflags & TEE_DATA_FLAG_SHARE_READ))
-		return TEE_ERROR_ACCESS_CONFLICT;
+	    (oflags & TEE_DATA_FLAG_SHARE_READ)) {
+	    DMSG("Shared read violation");
+        return TEE_ERROR_ACCESS_CONFLICT;
+    }
 
 	/* Same on WRITE access */
 	if (((oflags & TEE_DATA_FLAG_ACCESS_WRITE) ||
 	     (nflags & TEE_DATA_FLAG_ACCESS_WRITE)) &&
 	    !((nflags & TEE_DATA_FLAG_SHARE_WRITE) &&
-	      (oflags & TEE_DATA_FLAG_SHARE_WRITE)))
-		return TEE_ERROR_ACCESS_CONFLICT;
+	      (oflags & TEE_DATA_FLAG_SHARE_WRITE))) {
+	    DMSG("Write access violation");
+        return TEE_ERROR_ACCESS_CONFLICT;
+    }
 	if ((nflags & TEE_DATA_FLAG_SHARE_WRITE) !=
-	    (oflags & TEE_DATA_FLAG_SHARE_WRITE))
-		return TEE_ERROR_ACCESS_CONFLICT;
+	    (oflags & TEE_DATA_FLAG_SHARE_WRITE)) {
+	    DMSG("Shared write violation");
+        return TEE_ERROR_ACCESS_CONFLICT;
+    }
 
 	return TEE_SUCCESS;
 }
@@ -88,7 +98,7 @@ TEE_Result tee_pobj_get(TEE_UUID *uuid, void *obj_id, uint32_t obj_id_len,
 	TEE_Result res;
 
 	*obj = NULL;
-
+    //DMSG("In tee_pobj_get");
 	mutex_lock(&pobjs_mutex);
 	/* Check if file is open */
 	TAILQ_FOREACH(o, &tee_pobjs, link) {
@@ -103,6 +113,7 @@ TEE_Result tee_pobj_get(TEE_UUID *uuid, void *obj_id, uint32_t obj_id_len,
 	if (*obj) {
 		if (temporary != (*obj)->temporary) {
 			res = TEE_ERROR_ACCESS_CONFLICT;
+            DMSG("It's not temporary! temporary: %d, (*obj)->temporary: %d", temporary, (*obj)->temporary);
 			goto out;
 		}
 		res = tee_pobj_check_access((*obj)->flags, flags);

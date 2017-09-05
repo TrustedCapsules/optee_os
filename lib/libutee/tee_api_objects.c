@@ -411,6 +411,8 @@ TEE_Result TEE_OpenPersistentObject(uint32_t storageID, const void *objectID,
 	TEE_Result res;
 	uint32_t obj;
 
+    DMSG("In TEE_OpenPersistentObject");
+
 	if (!objectID) {
 		res = TEE_ERROR_ITEM_NOT_FOUND;
 		goto out;

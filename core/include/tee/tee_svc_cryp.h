@@ -67,7 +67,7 @@ TEE_Result syscall_hash_final(unsigned long state, const void *chunk,
 			size_t chunk_size, void *hash, uint64_t *hash_len);
 
 TEE_Result syscall_cipher_init(unsigned long state, const void *iv,
-			size_t iv_len);
+			size_t iv_len, uint32_t ctr);
 TEE_Result syscall_cipher_update(unsigned long state, const void *src,
 			size_t src_len, void *dest, uint64_t *dest_len);
 TEE_Result syscall_cipher_final(unsigned long state, const void *src,

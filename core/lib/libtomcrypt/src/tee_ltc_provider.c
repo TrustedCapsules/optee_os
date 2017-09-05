@@ -2007,12 +2007,18 @@ static TEE_Result cipher_init(void *ctx, uint32_t algo,
 			      const uint8_t *key2 __maybe_unused,
 			      size_t key2_len __maybe_unused,
 			      const uint8_t *iv __maybe_unused,
-			      size_t iv_len __maybe_unused)
+			      size_t iv_len __maybe_unused,
+                  uint32_t ctr __maybe_unused)
 {
 	TEE_Result res;
 	int ltc_res, ltc_cipherindex;
 	uint8_t *real_key, key_array[24];
 	size_t real_key_len;
+#if defined(CFG_CRYPTO_CTR)
+    uint8_t n = 15;
+    uint8_t ctr_temp = ctr;
+    symmetric_CTR *p = (symmetric_CTR *) ctx;
+#endif
 #if defined(CFG_CRYPTO_CTS)
 	struct tee_symmetric_cts *cts;
 #endif
@@ -2067,13 +2073,25 @@ static TEE_Result cipher_init(void *ctx, uint32_t algo,
 #endif
 #if defined(CFG_CRYPTO_CTR)
 	case TEE_ALG_AES_CTR:
-		if (iv_len !=
+        DMSG( "Using ctr!" );
+        if (iv_len !=
 		    (size_t)cipher_descriptor[ltc_cipherindex]->block_length)
 			return TEE_ERROR_BAD_PARAMETERS;
 		ltc_res = ctr_start(
 			ltc_cipherindex, iv, key1, key1_len,
 			0, CTR_COUNTER_BIG_ENDIAN, (symmetric_CTR *)ctx);
-		break;
+
+        while( ctr != 0 ) {
+            p->ctr[n] = ctr%256;
+            ctr = ctr/256;
+            n--;
+        }
+
+        if (ctr_temp != 0) {
+            DMSG ( "Encrypting b/c ctr_temp = %d", ctr_temp );
+            cipher_descriptor[p->cipher]->ecb_encrypt(p->ctr, p->pad, &p->key);
+        }
+        break;
 #endif
 #if defined(CFG_CRYPTO_CTS)
 	case TEE_ALG_AES_CTS:
@@ -2081,13 +2099,13 @@ static TEE_Result cipher_init(void *ctx, uint32_t algo,
 		res = cipher_init((void *)(&(cts->ecb)),
 					  TEE_ALG_AES_ECB_NOPAD, mode, key1,
 					  key1_len, key2, key2_len, iv,
-					  iv_len);
+					  iv_len, 0);
 		if (res != TEE_SUCCESS)
 			return res;
 		res = cipher_init((void *)(&(cts->cbc)),
 					  TEE_ALG_AES_CBC_NOPAD, mode, key1,
 					  key1_len, key2, key2_len, iv,
-					  iv_len);
+					  iv_len, 0);
 		if (res != TEE_SUCCESS)
 			return res;
 		ltc_res = CRYPT_OK;

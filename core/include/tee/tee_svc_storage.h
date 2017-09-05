@@ -33,6 +33,17 @@
 #include <tee/tee_fs.h>
 
 /*
+ * Simple syscall functions
+ */
+TEE_Result syscall_simple_open( char* filename, int* fd );
+TEE_Result syscall_simple_close( int fd );
+TEE_Result syscall_simple_read( int fd, void *buf, size_t len, uint32_t* nr );
+TEE_Result syscall_simple_write( int fd, const void *buf, size_t len, uint32_t* nw );
+TEE_Result syscall_simple_lseek( int fd, int32_t offset, int whence, uint32_t* ns );
+TEE_Result syscall_simple_unlink( char* filename );
+TEE_Result syscall_simple_ftruncate( int fd, uint32_t offset );
+
+/*
  * Persistant Object Functions
  */
 TEE_Result syscall_storage_obj_open(unsigned long storage_id, void *object_id,

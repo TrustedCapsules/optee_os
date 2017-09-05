@@ -67,6 +67,7 @@
 #define TEE_ERROR_SIGNATURE_INVALID       0xFFFF3072
 #define TEE_ERROR_TIME_NOT_SET            0xFFFF5000
 #define TEE_ERROR_TIME_NEEDS_RESET        0xFFFF5001
+#define TEE_ERROR_POLICY_FAILED           0xFFFF5002
 
 /* Parameter Type Constants */
 #define TEE_PARAM_TYPE_NONE             0

@@ -309,6 +309,14 @@ void TEE_GetREETime(TEE_Time *time)
 		TEE_Panic(res);
 }
 
+void TEE_GetGPS(TEE_GPS *gps)
+{
+    TEE_Result res = utee_get_gps( gps );
+
+    if (res != TEE_SUCCESS)
+        TEE_Panic(0);
+}
+
 void *TEE_Malloc(uint32_t len, uint32_t hint)
 {
 	return tee_user_mem_alloc(len, hint);

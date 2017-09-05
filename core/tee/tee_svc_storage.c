@@ -279,6 +279,8 @@ TEE_Result syscall_storage_obj_open(unsigned long storage_id, void *object_id,
 	const struct tee_file_operations *fops = file_ops(storage_id);
 	size_t attr_size;
 
+    //DMSG("In syscall_storage_obj_open");
+
 	if (!fops) {
 		res = TEE_ERROR_ITEM_NOT_FOUND;
 		goto exit;
@@ -490,6 +492,8 @@ TEE_Result syscall_storage_obj_create(unsigned long storage_id, void *object_id,
 	res = tee_svc_copy_kaddr_to_uref(obj, o);
 	if (res != TEE_SUCCESS)
 		goto oclose;
+
+    //DMSG("temporary: %s", o->pobj->temporary ? "true" : "false");
 
 	return TEE_SUCCESS;
 
