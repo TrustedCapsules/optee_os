@@ -99,11 +99,12 @@ TEE_Result syscall_simple_read( int fd, void *buf, size_t len, uint32_t* nr ) {
     if (res != TEE_SUCCESS)
         return res;
 
-    DMSG("va: %s", (unsigned char*) va);
+    //DMSG("nr: %d, va: %s", *nr, (unsigned char*) va);
 
     *nr = msg_param_get_buf_size(op.params + 1);
     memcpy(buf, va, *nr);
 
+    DMSG("nr: %d, buf: %s", *nr, (unsigned char*) buf);
     return res;
 }
 
@@ -160,13 +161,14 @@ TEE_Result syscall_simple_lseek( int fd, int32_t offset, int whence, uint32_t* n
     // Param 3
     op.params[2].attr = OPTEE_MSG_ATTR_TYPE_VALUE_OUTPUT;
 
+    DMSG( "Sending rpc operation" );
 	res = operation_commit(&op);
 
     if (res != TEE_SUCCESS)
         return res;
 
     *ns = op.params[2].u.value.a; // Update ns with returned value from RPC
-
+    DMSG( "Value returned from rpc op: %d", *ns);
 	return res;
 }
 

@@ -75,7 +75,7 @@ TEE_Result syscall_simple_recv_connection( int fd, void *buf, size_t len, int* b
 
 	memset(msg_params, 0, sizeof(msg_params));
 
-	va = tee_fs_rpc_cache_alloc(len + 1, &mobj, &cookie);
+	va = tee_fs_rpc_cache_alloc(len, &mobj, &cookie);
 	if (!va)
 		return TEE_ERROR_OUT_OF_MEMORY;
 
@@ -83,11 +83,11 @@ TEE_Result syscall_simple_recv_connection( int fd, void *buf, size_t len, int* b
 	msg_params[0].attr = OPTEE_MSG_ATTR_TYPE_VALUE_INPUT;
 	msg_params[0].u.value.a = OPTEE_MRC_NETWORK_RECV;
 	msg_params[0].u.value.b = fd;
-    msg_params[0].u.value.c = 0; // timeout
+    msg_params[0].u.value.c = -1; // timeout
 
     // Param 2: buffer
 	if (!msg_param_init_memparam(msg_params + 1, mobj, 0,
-				     len+1, cookie,
+				     len, cookie,
 				     MSG_PARAM_MEM_DIR_OUT))
 		return TEE_ERROR_BAD_STATE;
 
@@ -114,7 +114,7 @@ TEE_Result syscall_simple_send_connection( int fd, const void *buf, size_t len, 
 	
 	memset(msg_params, 0, sizeof(msg_params));
 
-	va = tee_fs_rpc_cache_alloc(len+1, &mobj, &cookie);
+	va = tee_fs_rpc_cache_alloc(len, &mobj, &cookie);
 	if (!va)
 		return TEE_ERROR_OUT_OF_MEMORY;
 
@@ -125,7 +125,7 @@ TEE_Result syscall_simple_send_connection( int fd, const void *buf, size_t len, 
 
 	// Param 2: buffer
 	if (!msg_param_init_memparam(msg_params + 1, mobj, 0,
-				     len+1, cookie,
+				     len, cookie,
 				     MSG_PARAM_MEM_DIR_IN))
 		return TEE_ERROR_BAD_STATE;
 
@@ -133,7 +133,7 @@ TEE_Result syscall_simple_send_connection( int fd, const void *buf, size_t len, 
 
     // Param 3: timeout and transmitted bytes
 	msg_params[2].attr = OPTEE_MSG_ATTR_TYPE_VALUE_INOUT;
-	msg_params[2].u.value.a = 0; // timeout
+	msg_params[2].u.value.a = -1; // timeout
 
 
 	res = thread_rpc_cmd(OPTEE_MSG_RPC_CMD_NETWORK, 3, msg_params);

@@ -140,13 +140,13 @@ static const struct syscall_entry tee_svc_syscall_table[] = {
     SYSCALL_ENTRY(syscall_simple_unlink),
     SYSCALL_ENTRY(syscall_simple_read),
     SYSCALL_ENTRY(syscall_simple_write),
-    SYSCALL_ENTRY(syscall_simple_lseek),
     SYSCALL_ENTRY(syscall_simple_ftruncate),
     SYSCALL_ENTRY(syscall_simple_recv_connection),
     SYSCALL_ENTRY(syscall_simple_send_connection),
     SYSCALL_ENTRY(syscall_simple_close_connection),
     SYSCALL_ENTRY(syscall_simple_open_connection),
     SYSCALL_ENTRY(syscall_get_gps),
+    SYSCALL_ENTRY(syscall_simple_lseek),
 };
 
 #ifdef TRACE_SYSCALLS

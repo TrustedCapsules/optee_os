@@ -198,8 +198,6 @@
 
         UTEE_SYSCALL utee_simple_write, TEE_SCN_SIMPLE_WRITE, 4
 
-        UTEE_SYSCALL utee_simple_lseek, TEE_SCN_SIMPLE_LSEEK, 4
-
         UTEE_SYSCALL utee_simple_ftruncate, TEE_SCN_SIMPLE_FTRUNCATE, 2
 
         UTEE_SYSCALL utee_simple_recv_connection, TEE_SCN_SIMPLE_RECV, 4
@@ -211,3 +209,5 @@
         UTEE_SYSCALL utee_simple_open_connection, TEE_SCN_SIMPLE_OPEN_CONNECTION, 3
 
         UTEE_SYSCALL utee_get_gps, TEE_SCN_GET_GPS, 1
+
+        UTEE_SYSCALL utee_simple_lseek, TEE_SCN_SIMPLE_LSEEK, 4

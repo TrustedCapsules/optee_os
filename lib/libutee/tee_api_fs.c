@@ -10,7 +10,8 @@
 
 
 TEE_Result TEE_SimpleLseek( int fd, int32_t offset, int whence, uint32_t* ns ) {
-	return utee_simple_lseek( fd, offset, whence, ns );
+    DMSG( "calling syscall_simple_lseek" );
+    return utee_simple_lseek( fd, offset, whence, ns );
 }
 
 TEE_Result TEE_SimpleWrite( int fd, const void *buf, size_t len, uint32_t* nw ) {
