@@ -14,20 +14,20 @@ TEE_Result TEE_SimpleLseek( int fd, int32_t offset, int whence, uint32_t* ns ) {
     return utee_simple_lseek( fd, offset, whence, ns );
 }
 
-TEE_Result TEE_SimpleWrite( int fd, const void *buf, size_t len, uint32_t* nw ) {
+TEE_Result TEE_SimpleWrite( int fd, const void *buf, size_t len, uint32_t* nw, uint32_t offset ) {
 	if( buf == NULL )
 		return -1;
 	if( len == 0 )
 		return 0;
-	return utee_simple_write( fd, buf, len, nw );
+	return utee_simple_write( fd, buf, len, nw, offset );
 }
 
-TEE_Result TEE_SimpleRead( int fd, void *buf, size_t len, uint32_t* nr ) {
+TEE_Result TEE_SimpleRead( int fd, void *buf, size_t len, uint32_t* nr, uint32_t offset ) {
 	if( buf == NULL )
 		return -1;
 	if( len == 0 ) 
 		return 0;
-	return utee_simple_read( fd, buf, len, nr );
+	return utee_simple_read( fd, buf, len, nr, offset );
 }
 
 TEE_Result TEE_SimpleUnlink( const char* filename ) {

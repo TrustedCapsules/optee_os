@@ -306,8 +306,8 @@ TEE_Result utee_get_gps( TEE_GPS *gps );
 TEE_Result utee_simple_open( const char* filename, int* fd );
 TEE_Result utee_simple_close( int fd );
 TEE_Result utee_simple_unlink( const char* filename );
-TEE_Result utee_simple_read( int fd, void* buf, size_t len, uint32_t* nr );
-TEE_Result utee_simple_write( int fd, const void* buf, size_t len, uint32_t* nw );
+TEE_Result utee_simple_read( int fd, void* buf, size_t len, uint32_t* nr, uint32_t offset );
+TEE_Result utee_simple_write( int fd, const void* buf, size_t len, uint32_t* nw, uint32_t offset );
 TEE_Result utee_simple_lseek( int fd, int32_t offset, int whence, uint32_t* ns );
 
 TEE_Result utee_simple_ftruncate( int fd, uint32_t off );

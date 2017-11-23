@@ -72,7 +72,7 @@ TEE_Result syscall_simple_close( int fd ) {
 	return tee_fs_rpc_close(OPTEE_MSG_RPC_CMD_FS, fd);
 }
 
-TEE_Result syscall_simple_read( int fd, void *buf, size_t len, uint32_t* nr ) {
+TEE_Result syscall_simple_read( int fd, void *buf, size_t len, uint32_t* nr, uint32_t offset ) {
     struct mobj *mobj;
     uint8_t *va;
     uint64_t cookie;
@@ -88,6 +88,7 @@ TEE_Result syscall_simple_read( int fd, void *buf, size_t len, uint32_t* nr ) {
     op.params[0].attr = OPTEE_MSG_ATTR_TYPE_VALUE_INPUT;
     op.params[0].u.value.a = OPTEE_MRF_SIMPLE_READ;
     op.params[0].u.value.b = fd;
+    op.params[0].u.value.c = offset;
 
     // Param 2
     if (!msg_param_init_memparam(op.params + 1, mobj, 0, len, cookie, MSG_PARAM_MEM_DIR_OUT))
@@ -111,7 +112,7 @@ TEE_Result syscall_simple_read( int fd, void *buf, size_t len, uint32_t* nr ) {
 /*
  * Cannot use the tee_rpc calls because they do not return number of bytes written and require an offset.
  */
-TEE_Result syscall_simple_write( int fd, const void *buf, size_t len, uint32_t* nw ) {
+TEE_Result syscall_simple_write( int fd, const void *buf, size_t len, uint32_t* nw, uint32_t offset ) {
     struct mobj *mobj;
     uint8_t *va;
     uint64_t cookie;
@@ -126,6 +127,7 @@ TEE_Result syscall_simple_write( int fd, const void *buf, size_t len, uint32_t* 
     op.params[0].attr = OPTEE_MSG_ATTR_TYPE_VALUE_INPUT;
     op.params[0].u.value.a = OPTEE_MRF_SIMPLE_WRITE;
     op.params[0].u.value.b = fd;
+    op.params[0].u.value.c = offset;
 
     // Param 2
     if (!msg_param_init_memparam(op.params + 1, mobj, 0, len, cookie, MSG_PARAM_MEM_DIR_IN))

@@ -194,9 +194,9 @@
 
         UTEE_SYSCALL utee_simple_unlink, TEE_SCN_SIMPLE_UNLINK, 1
 
-        UTEE_SYSCALL utee_simple_read, TEE_SCN_SIMPLE_READ, 4
+        UTEE_SYSCALL utee_simple_read, TEE_SCN_SIMPLE_READ, 5
 
-        UTEE_SYSCALL utee_simple_write, TEE_SCN_SIMPLE_WRITE, 4
+        UTEE_SYSCALL utee_simple_write, TEE_SCN_SIMPLE_WRITE, 5
 
         UTEE_SYSCALL utee_simple_ftruncate, TEE_SCN_SIMPLE_FTRUNCATE, 2
 
