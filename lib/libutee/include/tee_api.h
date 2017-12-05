@@ -184,8 +184,8 @@ void TEE_GetGPS(TEE_GPS *gps);
 
 TEE_Result TEE_SimpleOpen( const char* filename, int* fd );
 TEE_Result TEE_SimpleClose( int fd );
-TEE_Result TEE_SimpleRead( int fd, void *buf, size_t len, uint32_t* nr );
-TEE_Result TEE_SimpleWrite( int fd, const void *buf, size_t len, uint32_t* nw );
+TEE_Result TEE_SimpleRead( int fd, void *buf, size_t len, uint32_t* nr, uint32_t offset );
+TEE_Result TEE_SimpleWrite( int fd, const void *buf, size_t len, uint32_t* nw, uint32_t offset );
 TEE_Result TEE_SimpleLseek( int fd, int32_t offset, int whence, uint32_t* ns );
 TEE_Result TEE_SimpleUnlink( const char* filename );
 TEE_Result TEE_SimpleFtruncate( int fd, uint32_t off );
