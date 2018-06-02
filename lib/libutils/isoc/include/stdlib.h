@@ -40,6 +40,7 @@
 void
 qsort(void *aa, size_t n, size_t es, int (*cmp)(const void *, const void *));
 
+int atoi(const char *nptr);
 void abort(void) __noreturn;
 
 int abs(int i);

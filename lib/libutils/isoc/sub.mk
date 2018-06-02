@@ -15,6 +15,9 @@ srcs-y += qsort.c
 cflags-qsort.c-y += -Wno-inline
 cflags-remove-qsort.c-y += -Wcast-align
 
+srcs-y += ctype.c
+srcs-y += atoi.c
+
 srcs-y += strdup.c
 srcs-y += strndup.c
 

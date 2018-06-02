@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, STMicroelectronics International N.V.
+ * Copyright (c) 2014, Linaro Limited
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,18 +24,35 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef CTYPE_H
-#define CTYPE_H
+/*
+ * the atoi() function below is largely inspired from _PDCLIB_atomax() in the
+ * Public Domain C Library (PDCLib). Original copyright notice follows.
+ */
+/* _PDCLIB_atomax( const char * )
+ *
+ * This file is part of the Public Domain C Library (PDCLib).
+ * Permission is granted to use, modify, and / or redistribute at will.
+ */
 
-int isdigit(int c);
-int isspace(int c);
-int isalpha(int c);
-int isalnum(int c);
-int isxdigit(int c);
-int isupper(int c);
-int islower(int c);
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
 
-int toupper(int c);
-int tolower(int c);
+static const char *digits = "0123456789";
 
-#endif /*CTYPE_H*/
+int atoi(const char *s)
+{
+	int rc = 0;
+	char sign = '+';
+	const char *x;
+
+	while (isspace(*s))
+		s++;
+	if (*s == '+')
+		s++;
+	else if (*s == '-')
+		sign = *(s++);
+	while ((x = memchr(digits, tolower(*(s++)), 10)) != NULL)
+		rc = 10*rc + (x - digits);
+	return (sign == '+') ? rc : -rc;
+}

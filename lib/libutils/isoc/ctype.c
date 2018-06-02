@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, STMicroelectronics International N.V.
+ * Copyright (c) 2014, Linaro Limited
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,18 +24,62 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef CTYPE_H
-#define CTYPE_H
 
-int isdigit(int c);
-int isspace(int c);
-int isalpha(int c);
-int isalnum(int c);
-int isxdigit(int c);
-int isupper(int c);
-int islower(int c);
+/*
+ * Crude implementation (ASCII, C locale) of the standard character
+ * classification routines
+ */
 
-int toupper(int c);
-int tolower(int c);
+#include <ctype.h>
 
-#endif /*CTYPE_H*/
+int isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+int isspace(int c)
+{
+	return (c == ' '  || c == '\f' || c == '\n' || c == '\r' ||
+		c == '\t' || c == '\v');
+}
+
+int isalpha(int c)
+{
+	return (islower(c) || isupper(c));
+}
+
+int isalnum(int c)
+{
+	return (isalpha(c) || isdigit(c));
+}
+
+int isxdigit(int c)
+{
+	return (isdigit(c) || (c >= 'a' && c <= 'f')
+			   || (c >= 'A' && c <= 'F'));
+}
+
+int isupper(int c)
+{
+	return (c >= 'A' && c <= 'Z');
+}
+
+int islower(int c)
+{
+	return (c >= 'a' && c <= 'z');
+}
+
+int toupper(int c)
+{
+       if (c >= 'a' && c <= 'z')
+               return 'A' + c - 'a';
+       return c;
+}
+
+int tolower(int c)
+{
+       if (c >= 'A' && c <= 'Z')
+               return 'a' + c - 'A';
+       return c;
+}
+
