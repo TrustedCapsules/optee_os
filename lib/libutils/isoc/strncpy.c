@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, STMicroelectronics International N.V.
+ * Copyright (c) 2014, Linaro Limited
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,25 +24,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 /*
- * This file provides what C99 standard requires for <stdlib.h> in
- * 7.20.3 Memory management functions
+ * the atoi() function below is largely inspired from _PDCLIB_atomax() in the
+ * Public Domain C Library (PDCLib). Original copyright notice follows.
+ */
+/* _PDCLIB_atomax( const char * )
+ *
+ * This file is part of the Public Domain C Library (PDCLib).
+ * Permission is granted to use, modify, and / or redistribute at will.
  */
 
-#ifndef STDLIB_H
-#define STDLIB_H
+#include <stdlib.h>
+#include <ctype.h>
 
-#include <compiler.h>
-#include <stddef.h>
-#include <malloc.h>
+char *strncpy(char *dest, const char *src, size_t count)
+{
+    char *tmp = dest;
 
-void
-qsort(void *aa, size_t n, size_t es, int (*cmp)(const void *, const void *));
-
-int atoi(const char *nptr);
-void abort(void) __noreturn;
-char * strncpy(char *dest, const char *src, size_t count);
-int abs(int i);
-
-#endif /* STDLIB_H */
+    while (count)
+    {
+        if ((*tmp = *src) != 0)
+            src++;
+        tmp++;
+        count--;
+    }
+    return dest;
+}

@@ -17,7 +17,7 @@ cflags-remove-qsort.c-y += -Wcast-align
 
 srcs-y += ctype.c
 srcs-y += atoi.c
-
+srcs-y += strncpy.c
 srcs-y += strdup.c
 srcs-y += strndup.c
 
