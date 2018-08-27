@@ -45,4 +45,8 @@ void abort(void) __noreturn;
 char * strncpy(char *dest, const char *src, size_t count);
 int abs(int i);
 
+/* The largest number returned by rand() */
+#define 	RAND_MAX	__INT_MAX__
+int rand(void);
+
 #endif /* STDLIB_H */
