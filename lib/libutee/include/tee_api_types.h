@@ -162,6 +162,12 @@ typedef struct {
 	uint32_t millis;
 } TEE_Time;
 
+/* GPS Data API */
+typedef struct {
+    uint32_t longitude;
+    uint32_t latitude;
+} TEE_GPS;
+
 /* TEE Arithmetical APIs */
 
 typedef uint32_t TEE_BigInt;

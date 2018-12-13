@@ -405,4 +405,9 @@ struct optee_msg_arg {
  */
 #define OPTEE_MSG_RPC_CMD_BENCH_REG	20
 
+/*
+ * GPS Access
+ */
+#define OPTEE_MSG_RPC_CMD_GET_GPS 12
+
 #endif /* _OPTEE_MSG_H */

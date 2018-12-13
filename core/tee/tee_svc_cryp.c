@@ -39,6 +39,7 @@ struct tee_cryp_state {
 	uint32_t mode;
 	vaddr_t key1;
 	vaddr_t key2;
+	//size_t ctx_size; //THIS IS PRESENT IN OLD. NOT CHANGING FOR NOW.
 	void *ctx;
 	tee_cryp_ctx_finalize_func_t ctx_finalize;
 };

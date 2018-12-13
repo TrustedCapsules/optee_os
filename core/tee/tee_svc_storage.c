@@ -252,6 +252,8 @@ TEE_Result syscall_storage_obj_open(unsigned long storage_id, void *object_id,
 	struct tee_pobj *po = NULL;
 	struct user_ta_ctx *utc;
 	size_t attr_size;
+
+    //DMSG("In syscall_storage_obj_open");
 	const struct tee_file_operations *fops =
 			tee_svc_storage_file_ops(storage_id);
 

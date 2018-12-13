@@ -389,6 +389,8 @@ TEE_Result TEE_OpenPersistentObject(uint32_t storageID, const void *objectID,
 	TEE_Result res;
 	uint32_t obj;
 
+    DMSG("In TEE_OpenPersistentObject");
+
 	if (!objectID) {
 		res = TEE_ERROR_ITEM_NOT_FOUND;
 		goto out;
@@ -722,44 +724,55 @@ TEE_Result TEE_SeekObjectData(TEE_ObjectHandle object, int32_t offset,
 {
 	TEE_Result res;
 	TEE_ObjectInfo info;
-
+	DMSG("seekobj");
 	if (object == TEE_HANDLE_NULL) {
 		res = TEE_ERROR_BAD_PARAMETERS;
+		DMSG("res from SEEK_OBJ is %d", res);
 		goto out;
 	}
-
+	DMSG("seekobj");
 	res = utee_cryp_obj_get_info((unsigned long)object, &info);
+	DMSG("seekobj");
 	if (res != TEE_SUCCESS)
+		DMSG("res from SEEK_OBJ is %d", res);
 		goto out;
-
-	switch (whence) {
-	case TEE_DATA_SEEK_SET:
-		if (offset > 0 && (uint32_t)offset > TEE_DATA_MAX_POSITION) {
-			res = TEE_ERROR_OVERFLOW;
+		DMSG("seekobj");
+		switch (whence)
+		{
+		case TEE_DATA_SEEK_SET:
+			if (offset > 0 && (uint32_t)offset > TEE_DATA_MAX_POSITION)
+			{
+				res = TEE_ERROR_OVERFLOW;
+				DMSG("res from SEEK_OBJ is %d", res);
+				goto out;
+			}
+			break;
+		case TEE_DATA_SEEK_CUR:
+			if (offset > 0 &&
+				((uint32_t)offset + info.dataPosition >
+					 TEE_DATA_MAX_POSITION ||
+				 (uint32_t)offset + info.dataPosition <
+					 info.dataPosition))
+			{
+				res = TEE_ERROR_OVERFLOW;
+				DMSG("res from SEEK_OBJ is %d", res);
+				goto out;
+			}
+			break;
+		case TEE_DATA_SEEK_END:
+			if (offset > 0 &&
+				((uint32_t)offset + info.dataSize > TEE_DATA_MAX_POSITION ||
+				 (uint32_t)offset + info.dataSize < info.dataSize))
+			{
+				res = TEE_ERROR_OVERFLOW;
+				DMSG("res from SEEK_OBJ is %d", res);
+				goto out;
+			}
+			break;
+		default:
+			res = TEE_ERROR_ITEM_NOT_FOUND;
+			DMSG("res from SEEK_OBJ is %d", res);
 			goto out;
-		}
-		break;
-	case TEE_DATA_SEEK_CUR:
-		if (offset > 0 &&
-		    ((uint32_t)offset + info.dataPosition >
-		     TEE_DATA_MAX_POSITION ||
-		     (uint32_t)offset + info.dataPosition <
-		     info.dataPosition)) {
-			res = TEE_ERROR_OVERFLOW;
-			goto out;
-		}
-		break;
-	case TEE_DATA_SEEK_END:
-		if (offset > 0 &&
-		    ((uint32_t)offset + info.dataSize > TEE_DATA_MAX_POSITION ||
-		     (uint32_t)offset + info.dataSize < info.dataSize)) {
-			res = TEE_ERROR_OVERFLOW;
-			goto out;
-		}
-		break;
-	default:
-		res = TEE_ERROR_ITEM_NOT_FOUND;
-		goto out;
 	}
 
 	res = utee_storage_obj_seek((unsigned long)object, offset, whence);

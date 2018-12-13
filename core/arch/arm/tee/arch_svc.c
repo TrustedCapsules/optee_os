@@ -18,6 +18,7 @@
 #include <tee/arch_svc.h>
 #include <tee/tee_svc_cryp.h>
 #include <tee/tee_svc_storage.h>
+#include <tee/tee_network.h> // Simple network calls
 #include <tee/se/svc.h>
 #include <tee/svc_cache.h>
 #include <tee_syscall_numbers.h>
@@ -118,6 +119,18 @@ static const struct syscall_entry tee_svc_syscall_table[] = {
 	SYSCALL_ENTRY(syscall_se_channel_transmit),
 	SYSCALL_ENTRY(syscall_se_channel_close),
 	SYSCALL_ENTRY(syscall_cache_operation),
+    SYSCALL_ENTRY(syscall_simple_open),
+    SYSCALL_ENTRY(syscall_simple_close),
+    SYSCALL_ENTRY(syscall_simple_unlink),
+    SYSCALL_ENTRY(syscall_simple_read),
+    SYSCALL_ENTRY(syscall_simple_write),
+    SYSCALL_ENTRY(syscall_simple_ftruncate),
+    SYSCALL_ENTRY(syscall_simple_recv_connection),
+    SYSCALL_ENTRY(syscall_simple_send_connection),
+    SYSCALL_ENTRY(syscall_simple_close_connection),
+    SYSCALL_ENTRY(syscall_simple_open_connection),
+    SYSCALL_ENTRY(syscall_get_gps),
+    SYSCALL_ENTRY(syscall_simple_lseek),
 };
 
 #ifdef TRACE_SYSCALLS

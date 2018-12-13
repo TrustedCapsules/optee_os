@@ -11,6 +11,8 @@ srcs-y += tee_api_objects.c
 srcs-y += tee_api_operations.c
 srcs-y += tee_api_se.c
 srcs-y += tee_api_panic.c
+srcs-y += tee_api_fs.c
+srcs-y += tee_api_network.c
 srcs-y += tee_tcpudp_socket.c
 srcs-y += tee_socket_pta.c
 

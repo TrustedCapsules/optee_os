@@ -14,7 +14,7 @@
 #include <mm/tee_mm.h>
 #include <mm/core_memprot.h>
 #include <kernel/tee_time.h>
-
+#include <kernel/tee_gps.h>
 #include <user_ta_header.h>
 #include <trace.h>
 #include <kernel/trace_ta.h>
@@ -1017,6 +1017,27 @@ TEE_Result syscall_wait(unsigned long timeout)
 			return TEE_SUCCESS;
 
 		tee_time_wait(timeout - mytime);
+	}
+
+	return res;
+}
+
+TEE_Result syscall_get_gps(TEE_GPS *gps)
+{
+	TEE_Result res, res2;
+	struct tee_ta_session *s = NULL;
+	TEE_GPS g;
+
+	res = tee_ta_get_current_session(&s);
+	if (res != TEE_SUCCESS)
+		return res;
+
+	res = tee_get_ree_gps(&g);
+
+	if (res == TEE_SUCCESS || res == TEE_ERROR_OVERFLOW) {
+		res2 = tee_svc_copy_to_user(gps, &g, sizeof(g));
+		if (res2 != TEE_SUCCESS)
+			res = res2;
 	}
 
 	return res;

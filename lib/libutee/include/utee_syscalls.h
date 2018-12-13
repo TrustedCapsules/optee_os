@@ -92,7 +92,7 @@ TEE_Result utee_hash_update(unsigned long state, const void *chunk,
 TEE_Result utee_hash_final(unsigned long state, const void *chunk,
 			   size_t chunk_size, void *hash, uint64_t *hash_len);
 
-TEE_Result utee_cipher_init(unsigned long state, const void *iv, size_t iv_len);
+TEE_Result utee_cipher_init(unsigned long state, const void *iv, size_t iv_len );
 TEE_Result utee_cipher_update(unsigned long state, const void *src,
 			size_t src_len, void *dest, uint64_t *dest_len);
 TEE_Result utee_cipher_final(unsigned long state, const void *src,
@@ -277,5 +277,24 @@ TEE_Result utee_se_channel_close(unsigned long c);
 TEE_Result utee_cache_operation(void *va, size_t l, unsigned long op);
 
 TEE_Result utee_gprof_send(void *buf, size_t size, uint32_t *id);
+
+/* Get GPS */
+TEE_Result utee_get_gps( TEE_GPS *gps );
+
+/* simple fs & network operations */
+TEE_Result utee_simple_open( const char* filename, int* fd );
+TEE_Result utee_simple_close( int fd );
+TEE_Result utee_simple_unlink( const char* filename );
+TEE_Result utee_simple_read( int fd, void* buf, size_t len, uint32_t* nr, uint32_t offset );
+TEE_Result utee_simple_write( int fd, const void* buf, size_t len, uint32_t* nw, uint32_t offset );
+TEE_Result utee_simple_lseek( int fd, int32_t offset, int whence, uint32_t* ns );
+
+TEE_Result utee_simple_ftruncate( int fd, uint32_t off );
+
+TEE_Result utee_simple_open_connection( const char* ip, int port, int* fd );
+TEE_Result utee_simple_recv_connection( int fd, void* buf, size_t len, int* bytes );
+TEE_Result utee_simple_send_connection( int fd, const void* buf, size_t len, int* bytes );
+TEE_Result utee_simple_close_connection( int fd );
+//int  utee_simple_close_all_connections( void );
 
 #endif /* UTEE_SYSCALLS_H */

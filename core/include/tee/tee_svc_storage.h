@@ -15,7 +15,19 @@
  * The value TEE_STORAGE_PRIVATE will select the REE FS if available, otherwise
  * RPMB.
  */
-const struct tee_file_operations *tee_svc_storage_file_ops(uint32_t storage_id);
+ const struct tee_file_operations *tee_svc_storage_file_ops(uint32_t storage_id);
+
+/*
+ * Simple syscall functions
+ */
+TEE_Result syscall_simple_open( char* filename, int* fd );
+TEE_Result syscall_simple_close( int fd );
+TEE_Result syscall_simple_read( int fd, void *buf, size_t len, uint32_t* nr, uint32_t offset );
+TEE_Result syscall_simple_write( int fd, const void *buf, size_t len, uint32_t* nw, uint32_t offset );
+TEE_Result syscall_simple_lseek( int fd, int32_t offset, int whence, uint32_t* ns );
+TEE_Result syscall_simple_unlink( char* filename );
+TEE_Result syscall_simple_ftruncate( int fd, uint32_t offset );
+
 
 /*
  * Persistant Object Functions

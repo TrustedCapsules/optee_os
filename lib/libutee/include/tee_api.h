@@ -146,6 +146,26 @@ TEE_Result TEE_CopyObjectAttributes1(TEE_ObjectHandle destObject,
 TEE_Result TEE_GenerateKey(TEE_ObjectHandle object, uint32_t keySize,
 			   const TEE_Attribute *params, uint32_t paramCount);
 
+/* TEE GPS API */
+void TEE_GetGPS(TEE_GPS *gps);
+
+/* TEE filesystem API */
+
+TEE_Result TEE_SimpleOpen( const char* filename, int* fd );
+TEE_Result TEE_SimpleClose( int fd );
+TEE_Result TEE_SimpleRead( int fd, void *buf, size_t len, uint32_t* nr, uint32_t offset );
+TEE_Result TEE_SimpleWrite( int fd, const void *buf, size_t len, uint32_t* nw, uint32_t offset );
+TEE_Result TEE_SimpleLseek( int fd, int32_t offset, int whence, uint32_t* ns );
+TEE_Result TEE_SimpleUnlink( const char* filename );
+TEE_Result TEE_SimpleFtruncate( int fd, uint32_t off );
+
+/* TEE Network API */
+TEE_Result TEE_SimpleOpenConnection( const char* ip, int port, int* fd );
+TEE_Result TEE_SimpleRecvConnection( int fd, void *buf, size_t len, int* bytes );
+TEE_Result TEE_SimpleSendConnection( int fd, const void *buf, size_t len, int* bytes );
+TEE_Result TEE_SimpleCloseConnection( int fd );
+//int   TEE_SimpleCloseAllConnections( void );
+
 /* Data and Key Storage API  - Persistent Object Functions */
 
 TEE_Result TEE_OpenPersistentObject(uint32_t storageID, const void *objectID,

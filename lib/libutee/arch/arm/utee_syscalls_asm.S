@@ -49,7 +49,7 @@
 
         UTEE_SYSCALL utee_hash_final, TEE_SCN_HASH_FINAL, 5
 
-        UTEE_SYSCALL utee_cipher_init, TEE_SCN_CIPHER_INIT, 3
+        UTEE_SYSCALL utee_cipher_init, TEE_SCN_CIPHER_INIT, 4
 
         UTEE_SYSCALL utee_cipher_update, TEE_SCN_CIPHER_UPDATE, 5
 
@@ -165,3 +165,27 @@
                 TEE_SCN_SE_CHANNEL_CLOSE, 1
 
         UTEE_SYSCALL utee_cache_operation, TEE_SCN_CACHE_OPERATION, 3
+
+        UTEE_SYSCALL utee_simple_open, TEE_SCN_SIMPLE_OPEN, 2
+
+        UTEE_SYSCALL utee_simple_close, TEE_SCN_SIMPLE_CLOSE, 1
+
+        UTEE_SYSCALL utee_simple_unlink, TEE_SCN_SIMPLE_UNLINK, 1
+
+        UTEE_SYSCALL utee_simple_read, TEE_SCN_SIMPLE_READ, 5
+
+        UTEE_SYSCALL utee_simple_write, TEE_SCN_SIMPLE_WRITE, 5
+
+        UTEE_SYSCALL utee_simple_ftruncate, TEE_SCN_SIMPLE_FTRUNCATE, 2
+
+        UTEE_SYSCALL utee_simple_recv_connection, TEE_SCN_SIMPLE_RECV, 4
+
+        UTEE_SYSCALL utee_simple_send_connection, TEE_SCN_SIMPLE_SEND, 4
+
+        UTEE_SYSCALL utee_simple_close_connection, TEE_SCN_SIMPLE_CLOSE_CONNECTION, 1
+
+        UTEE_SYSCALL utee_simple_open_connection, TEE_SCN_SIMPLE_OPEN_CONNECTION, 3
+
+        UTEE_SYSCALL utee_get_gps, TEE_SCN_GET_GPS, 1
+
+        UTEE_SYSCALL utee_simple_lseek, TEE_SCN_SIMPLE_LSEEK, 4
