@@ -102,8 +102,13 @@
  */
 
 #define DRAM0_BASE		0x00000000
+#ifdef HIKEY_TZRAM_64MB
+#define DRAM0_SIZE		0x3C000000
+#define DRAM0_SIZE_NSEC         0x3B000000
+#else
 #define DRAM0_SIZE		0x3F000000
 #define DRAM0_SIZE_NSEC		0x3E000000
+#endif /* HIKEY_TZRAM_64MB */
 #define DRAM1_BASE		0x40000000
 
 #if defined(PLATFORM_FLAVOR_hikey)
